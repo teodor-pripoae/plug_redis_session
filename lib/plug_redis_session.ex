@@ -1,0 +1,2 @@
+defmodule PlugRedisSession do
+end
