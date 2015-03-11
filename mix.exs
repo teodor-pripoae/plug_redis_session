@@ -5,26 +5,40 @@ defmodule PlugRedisSession.Mixfile do
     [app: :plug_redis_session,
      version: "0.0.1",
      elixir: "~> 1.0",
+     package: package,
+     description: description,
      deps: deps]
   end
 
-  # Configuration for the OTP application
-  #
-  # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger]]
+    [applications: [:logger, :poison],
+     mod: {PlugRedisSession, []}]
   end
 
-  # Dependencies can be Hex packages:
-  #
-  #   {:mydep, "~> 0.3.0"}
-  #
-  # Or git/path repositories:
-  #
-  #   {:mydep, git: "https://github.com/elixir-lang/mydep.git", tag: "0.1.0"}
-  #
-  # Type `mix help deps` for more examples and options
   defp deps do
-    []
+    [
+      { :cowboy, "~> 1.0.0" },
+      { :plug, "~> 0.10.0" },
+      { :poison, "~> 1.3.1" },
+      { :exredis_pool, github: "teodor-pripoae/exredis_pool" },
+      { :amrita, "~> 0.4", github: "josephwilk/amrita", only: :test }
+    ]
+  end
+
+  defp description do
+    """
+    Redis store support for plug sessions.
+    """
+  end
+
+  defp package do
+    [
+      files: ["lib", "priv", "mix.exs", "README*", "LICENSE*"],
+      contributors: ["Teodor Pripoae"],
+      licenses: ["MIT"],
+      links: %{
+        "Github" => "https://github.com/teodor-pripoae/plug_redis_session"
+      }
+    ]
   end
 end
